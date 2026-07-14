@@ -27,3 +27,39 @@ module "network" {
     ManagedBy   = "Terraform"
   }
 }
+
+module "iam" {
+  source = "../../modules/iam"
+
+  role_name = "test-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      }
+      Action = "sts:AssumeRole"
+    }]
+  })
+
+  policy_arns = []
+  tags        = {}
+}
+
+module "eks" {
+  source = "../../modules/eks"
+
+  cluster_name       = "platform-dev"
+  kubernetes_version = "1.33"
+
+  vpc_id             = module.network.vpc_id
+  private_subnet_ids = module.network.private_subnets
+
+  tags = {
+    Project     = "platform-engineering"
+    Environment = "dev"
+    Owner       = "Santosh"
+    ManagedBy   = "Terraform"
+  }
+}

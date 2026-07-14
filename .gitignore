@@ -3,3 +3,4 @@
 *.tfstate.*
 .terraform.lock.hcl
 terraform.tfvars
+tf_output.log
