@@ -11,6 +11,10 @@ module "eks" {
       before_compute = true
     }
     kube-proxy             = {}
+
+    aws-ebs-csi-driver = {
+       service_account_role_arn = module.ebs_csi_irsa_role.iam_role_arn
+    }
     vpc-cni                = {
       before_compute = true
     }
