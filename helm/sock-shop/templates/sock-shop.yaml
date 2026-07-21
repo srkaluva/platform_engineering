@@ -124,7 +124,8 @@ metadata:
 spec:
   ports:
     # the port that this service should serve on
-  - port: 27017
+  - name: metrics
+    port: 27017
     targetPort: 27017
   selector:
     name: carts-db
@@ -197,7 +198,8 @@ metadata:
 spec:
   ports:
     # the port that this service should serve on
-  - port: 80
+  - name: metrics
+    port: 80
     targetPort: 80
   selector:
     name: catalogue
@@ -243,7 +245,8 @@ metadata:
 spec:
   ports:
     # the port that this service should serve on
-  - port: 3306
+  - name: metrics
+    port: 3306
     targetPort: 3306
   selector:
     name: catalogue-db
@@ -308,11 +311,13 @@ metadata:
         prometheus.io/scrape: 'true'
   labels:
     name: front-end
+    monitoring: enabled
   namespace: {{ .Values.namespace }}
 spec:
   type: NodePort
   ports:
-  - port: 80
+  - name: metrics
+    port: 80
     targetPort: 8079
     nodePort: 30001
   selector:
@@ -377,6 +382,7 @@ metadata:
         prometheus.io/scrape: 'true'
   labels:
     name: orders
+    monitoring: enabled
   namespace: {{ .Values.namespace }}
 spec:
   ports:
@@ -434,6 +440,7 @@ metadata:
   name: orders-db
   labels:
     name: orders-db
+    monitoring: enabled
   namespace: {{ .Values.namespace }}
 spec:
   ports:
@@ -504,6 +511,7 @@ metadata:
         prometheus.io/scrape: 'true'
   labels:
     name: payment
+    monitoring: enabled
   namespace: {{ .Values.namespace }}
 spec:
   ports:
@@ -556,6 +564,7 @@ metadata:
         prometheus.io/scrape: 'true'
   labels:
     name: queue-master
+    monitoring: enabled
   namespace: {{ .Values.namespace }}
 spec:
   ports:
@@ -619,6 +628,7 @@ metadata:
         prometheus.io/port: '9090'
   labels:
     name: rabbitmq
+    monitoring: enabled
   namespace: {{ .Values.namespace }}
 spec:
   ports:
@@ -676,6 +686,7 @@ metadata:
   name: session-db
   labels:
     name: session-db
+    monitoring: enabled
   namespace: {{ .Values.namespace }}
 spec:
   ports:
@@ -746,6 +757,7 @@ metadata:
         prometheus.io/scrape: 'true'
   labels:
     name: shipping
+    monitoring: enabled
   namespace: {{ .Values.namespace }}
 spec:
   ports:
@@ -820,6 +832,7 @@ metadata:
         prometheus.io/scrape: 'true'
   labels:
     name: user
+    monitoring: enabled
   namespace: {{ .Values.namespace }}
 spec:
   ports:
@@ -879,6 +892,7 @@ metadata:
   name: user-db
   labels:
     name: user-db
+    monitoring: enabled
   namespace: {{ .Values.namespace }}
 spec:
   ports:

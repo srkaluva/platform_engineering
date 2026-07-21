@@ -65,3 +65,12 @@ Grafana visualizes:
 - Metrics
 - Logs
 - Traces
+
+## get secrets
+kubectl get secret monitoring-grafana \
+  -n monitoring \
+  -o jsonpath="{.data.admin-user}" | base64 --decode
+
+  kubectl get secret monitoring-grafana \
+  -n monitoring \
+  -o jsonpath="{.data.admin-password}" | base64 --decode

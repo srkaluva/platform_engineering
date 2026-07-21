@@ -4,3 +4,4 @@
 .terraform.lock.hcl
 terraform.tfvars
 tf_output.log
+*/env.sh

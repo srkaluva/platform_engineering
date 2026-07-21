@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: sock-shop
+  namespace: monitoring
+  labels:
+    release: prometheus
+spec:
+  namespaceSelector:
+    matchNames:
+      - sock-shop
+
+  selector:
+    matchLabels:
+      monitoring: enabled
+
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s

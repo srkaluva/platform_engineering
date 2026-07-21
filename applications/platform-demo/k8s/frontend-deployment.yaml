@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: frontend
+
+  template:
+    metadata:
+      labels:
+        app: frontend
+
+    spec:
+      containers:
+      - name: frontend
+
+        image: 440946411147.dkr.ecr.us-west-2.amazonaws.com/platform-demo/frontend:v1
+
+        ports:
+        - containerPort: 8080
+
+        env:
+        - name: OTEL_SERVICE_NAME
+          value: frontend-service
+
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: http://otel-collector-opentelemetry-collector.monitoring.svc.cluster.local:4317
