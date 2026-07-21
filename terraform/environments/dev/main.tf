@@ -63,3 +63,23 @@ module "eks" {
     ManagedBy   = "Terraform"
   }
 }
+
+locals {
+  repositories = [
+    "platform-demo/frontend",
+    "platform-demo/payment"
+  ]
+}
+
+module "ecr" {
+  for_each = toset(local.repositories)
+
+  source = "../../modules/ecr"
+
+  repository_name = each.value
+
+  tags = {
+    Project     = "platform-engineering"
+    Environment = "dev"
+  }
+}
