@@ -36,4 +36,4 @@ spec:
           value: otlp
         - name: OTEL_METRICS_EXPORTER 
           value: otlp
-          
+       
