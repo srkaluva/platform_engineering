@@ -1,35 +1,66 @@
 mode: deployment
 
 image:
-  repository: otel/opentelemetry-collector-k8s
+  repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-k8s
+
+command:
+  name: otelcol-k8s
+
+extraEnvs:
+  - name: DYNATRACE_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: dynatrace-secret
+        key: api-token
 
 config:
   receivers:
     otlp:
       protocols:
         grpc:
+          endpoint: ${env:MY_POD_IP}:4317
         http:
+          endpoint: ${env:MY_POD_IP}:4318
 
   processors:
-    batch:
+    batch: {}
 
   exporters:
+
     debug: {}
+
+    otlphttp/dynatrace:
+      endpoint: https://fsr83749.live.dynatrace.com/api/v2/otlp
+
+      headers:
+        Authorization: "Api-Token ${env:DYNATRACE_API_TOKEN}"
 
   service:
     pipelines:
+
       traces:
-        receivers: [otlp]
-        processors: [batch]
-        exporters: [debug]
+        receivers:
+          - otlp
+        processors:
+          - batch
+        exporters:
+          - debug
+          - otlphttp/dynatrace
 
       metrics:
-        receivers: [otlp]
-        processors: [batch]
-        exporters: [debug]
+        receivers:
+          - otlp
+        processors:
+          - batch
+        exporters:
+          - debug
+          - otlphttp/dynatrace
 
       logs:
-        receivers: [otlp]
-        processors: [batch]
-        exporters: [debug]
-        
+        receivers:
+          - otlp
+        processors:
+          - batch
+        exporters:
+          - debug
+          - otlphttp/dynatrace
