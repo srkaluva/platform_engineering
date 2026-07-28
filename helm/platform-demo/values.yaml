@@ -1,0 +1,10 @@
+namespace: default
+
+frontend:
+  replicaCount: 1
+
+catalogue:
+  replicaCount: 1
+
+carts:
+  replicaCount: 1
