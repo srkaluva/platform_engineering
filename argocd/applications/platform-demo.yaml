@@ -13,7 +13,7 @@ spec:
 
     targetRevision: feature-baseline
 
-    path: applications/platform-demo/k8s
+    path: helm/platform-demo
 
   destination:
     server: https://kubernetes.default.svc

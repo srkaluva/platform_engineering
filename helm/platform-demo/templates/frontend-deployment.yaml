@@ -20,7 +20,7 @@ spec:
       containers:
       - name: frontend
 
-        image: 440946411147.dkr.ecr.us-west-2.amazonaws.com/platform-demo/frontend:v1
+        image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
 
         ports:
         - containerPort: 8080
